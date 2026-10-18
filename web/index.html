@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MW Rental</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app" class="hidden">
+      <div class="panel">
+        <header>
+          <div class="brand">
+            <div class="logo">MW</div>
+            <div>
+              <h1 id="brand"></h1>
+              <p id="brandSub"></p>
+            </div>
+          </div>
+
+          <nav id="tabs">
+            <button
+              class="tab active"
+              data-tab="vehicles"
+              id="tVehicles"
+            ></button>
+            <button class="tab" data-tab="info" id="tInfo"></button>
+            <button class="tab" data-tab="rental" id="tRental"></button>
+          </nav>
+
+          <div class="wallet">
+            <div class="chip"><span id="lCash"></span><b id="cash"></b></div>
+            <div class="chip"><span id="lBank"></span><b id="bank"></b></div>
+            <button id="closeBtn" aria-label="close">&#10005;</button>
+          </div>
+        </header>
+
+        <div class="loc"><i></i><span id="locLabel"></span></div>
+
+        <main>
+          <section id="pane-vehicles" class="pane active">
+            <div class="left">
+              <div id="filters" class="filters"></div>
+              <div id="grid" class="grid"></div>
+            </div>
+            <aside id="checkout"></aside>
+          </section>
+
+          <section id="pane-info" class="pane">
+            <h2 id="rulesTitle"></h2>
+            <div id="rules" class="rules"></div>
+          </section>
+
+          <section id="pane-rental" class="pane">
+            <div id="rentalBox"></div>
+          </section>
+        </main>
+      </div>
+      <div id="toast" class="toast"></div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
