@@ -96,4 +96,7 @@ Locales['en'] = {
     ui_insufficient = 'Not enough funds on the selected account',
     ui_per_cycle  = 'Per charge',
     ui_active     = 'ACTIVE',
+    ui_step1 = 'Choose a vehicle',
+    ui_step2 = 'Pick billing period and payment method',
+    ui_step3 = 'Collect your keys and papers',
 }

@@ -8,84 +8,88 @@
   </head>
   <body>
     <div id="app" class="hidden">
-      <div class="orb o1"></div>
-      <div class="orb o2"></div>
-
-      <div class="shell">
-        <!-- SIDEBAR -->
-        <aside class="side">
-          <div class="brand">
-            <div class="logo"><span>MW</span></div>
-            <div class="bt">
-              <h1 id="brand"></h1>
-              <p id="brandSub"></p>
-            </div>
-          </div>
-
-          <nav id="tabs">
-            <button class="nav active" data-tab="vehicles">
-              <i data-ic="car"></i><span id="tVehicles"></span>
-            </button>
-            <button class="nav" data-tab="rental">
-              <i data-ic="key"></i><span id="tRental"></span
-              ><em id="dot" class="dot hidden"></em>
-            </button>
-            <button class="nav" data-tab="info">
-              <i data-ic="shield"></i><span id="tInfo"></span>
-            </button>
-          </nav>
-
-          <div class="grow"></div>
-
-          <div class="wallet">
-            <div class="w">
-              <i data-ic="cash"></i>
-              <div><span id="lCash"></span><b id="cash"></b></div>
-            </div>
-            <div class="w">
-              <i data-ic="bank"></i>
-              <div><span id="lBank"></span><b id="bank"></b></div>
-            </div>
-          </div>
-          <div class="loc">
-            <i data-ic="pin"></i><span id="locLabel"></span>
-          </div>
-        </aside>
-
-        <!-- CONTENT -->
-        <section class="content">
-          <button id="closeBtn" class="x" aria-label="close">
-            <i data-ic="x"></i>
-          </button>
-
-          <div id="pane-vehicles" class="pane active">
-            <div class="center">
-              <div class="toolbar">
-                <label class="search"
-                  ><i data-ic="search"></i
-                  ><input id="search" type="text" autocomplete="off"
-                /></label>
-                <button id="sortBtn" class="sort">
-                  <i data-ic="sort"></i><span id="sortLbl"></span>
-                </button>
+      <div id="scaler">
+        <div class="shell">
+          <!-- SIDEBAR -->
+          <aside class="side">
+            <div class="brand">
+              <div class="logo"><span>MW</span></div>
+              <div class="bt">
+                <h1 id="brand"></h1>
+                <p id="brandSub"></p>
               </div>
-              <div id="filters" class="filters"></div>
-              <div id="grid" class="grid"></div>
             </div>
-            <aside id="checkout" class="checkout"></aside>
-          </div>
 
-          <div id="pane-rental" class="pane scroll">
-            <div id="rentalBox"></div>
-          </div>
+            <nav id="tabs">
+              <button class="nav active" data-tab="vehicles">
+                <i data-ic="car"></i><span id="tVehicles"></span>
+              </button>
+              <button class="nav" data-tab="rental">
+                <i data-ic="key"></i><span id="tRental"></span
+                ><em id="dot" class="dot hidden"></em>
+              </button>
+              <button class="nav" data-tab="info">
+                <i data-ic="shield"></i><span id="tInfo"></span>
+              </button>
+            </nav>
 
-          <div id="pane-info" class="pane scroll">
-            <h2 id="rulesTitle" class="h2"></h2>
-            <div id="rules" class="bento"></div>
-          </div>
-        </section>
+            <div class="grow"></div>
+
+            <div class="wallet">
+              <div class="w">
+                <i data-ic="cash"></i>
+                <div><span id="lCash"></span><b id="cash"></b></div>
+              </div>
+              <div class="w">
+                <i data-ic="bank"></i>
+                <div><span id="lBank"></span><b id="bank"></b></div>
+              </div>
+            </div>
+          </aside>
+
+          <!-- CONTENT -->
+          <section class="content">
+            <div class="top">
+              <div class="ttl">
+                <h2 id="pageTitle"></h2>
+                <span class="locchip"
+                  ><i data-ic="pin"></i><span id="locLabel"></span
+                ></span>
+              </div>
+              <button id="closeBtn" class="x" aria-label="close">
+                <i data-ic="x"></i>
+              </button>
+            </div>
+
+            <div class="panes">
+              <div id="pane-vehicles" class="pane active">
+                <div class="center">
+                  <div class="toolbar">
+                    <label class="search"
+                      ><i data-ic="search"></i
+                      ><input id="search" type="text" autocomplete="off"
+                    /></label>
+                    <button id="sortBtn" class="sort">
+                      <i data-ic="sort"></i><span id="sortLbl"></span>
+                    </button>
+                  </div>
+                  <div id="filters" class="filters"></div>
+                  <div id="grid" class="grid"></div>
+                </div>
+                <aside id="checkout" class="checkout"></aside>
+              </div>
+
+              <div id="pane-rental" class="pane scroll">
+                <div id="rentalBox"></div>
+              </div>
+
+              <div id="pane-info" class="pane scroll">
+                <div id="rules" class="bento"></div>
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
-
       <div id="toast" class="toast"></div>
     </div>
     <script src="script.js"></script>

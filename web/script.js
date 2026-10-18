@@ -8,10 +8,21 @@ const post = (name, data = {}) =>
     .then((r) => r.json())
     .catch(() => ({}));
 
-/* ---------- ikone (inline SVG, bez eksternih fajlova) ---------- */
+/* ---------- auto-skaliranje (dizajn 1360x800) ---------- */
+function fit() {
+  const s = Math.max(
+    0.5,
+    Math.min((innerWidth * 0.94) / 1360, (innerHeight * 0.92) / 800, 1.6),
+  );
+  document.documentElement.style.setProperty("--s", s.toFixed(3));
+}
+addEventListener("resize", fit);
+fit();
+
+/* ---------- ikone (inline SVG) ---------- */
 const IC = {
-  car: '<path d="M5 17h14M6 17l1.6-6.2a1 1 0 0 1 1-.8h6.8a1 1 0 0 1 1 .8L18 17M7.5 11l1.1-3.2A1 1 0 0 1 9.5 7h5a1 1 0 0 1 .9.8L16.5 11"/><circle cx="8" cy="17" r="1.6"/><circle cx="16" cy="17" r="1.6"/>',
-  key: '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/>',
+  car: '<path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/>',
+  key: '<circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3L21 2M17 6l3 3M14.5 8.5L17 11"/>',
   shield:
     '<path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
   cash: '<rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6.5 9.5v.01M17.5 14.5v.01"/>',
@@ -22,7 +33,6 @@ const IC = {
   sort: '<path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/>',
   check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
   alert: '<path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17v.01"/>',
-  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/>',
   coins:
     '<circle cx="9" cy="9" r="5.5"/><path d="M14.5 6.5A5.5 5.5 0 1 1 9.5 14.5"/>',
   doc: '<path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/>',
@@ -54,7 +64,14 @@ const S = {
   busy: false,
 };
 const T = (k) => (S.d && S.d.locale && S.d.locale[k]) || k;
-const money = (n) => S.d.currency + Math.round(n).toLocaleString("en-US");
+const NF = new Intl.NumberFormat("en-US");
+const CF = new Intl.NumberFormat("en-US", {
+  notation: "compact",
+  maximumFractionDigits: 2,
+});
+const money = (n) =>
+  S.d.currency +
+  (Math.abs(n) >= 1e9 ? CF.format(Math.round(n)) : NF.format(Math.round(n)));
 const esc = (s) =>
   String(s).replace(
     /[&<>"']/g,
@@ -74,6 +91,11 @@ const fmt = (sec) => {
   return h > 0 ? `${h}:${p2(m)}:${p2(s)}` : `${p2(m)}:${p2(s)}`;
 };
 const cycleCost = (v, p) => Math.max(1, Math.ceil((v.price * p) / 60));
+const TAB_TITLE = {
+  vehicles: "ui_tab_vehicles",
+  rental: "ui_tab_rental",
+  info: "ui_tab_info",
+};
 
 function toast(msg) {
   const t = $("#toast");
@@ -96,7 +118,6 @@ function renderStatic() {
   $("#locLabel").textContent = S.d.location;
   $("#search").placeholder = T("ui_search");
   $("#sortLbl").textContent = T("ui_sort");
-  $("#rulesTitle").textContent = T("ui_rules_title");
   const rIc = ["coins", "shield", "doc", "undo", "wrench", "ban", "key"];
   $("#rules").innerHTML = rIc
     .map(
@@ -113,8 +134,12 @@ function renderStatic() {
 }
 
 function renderWallet() {
-  $("#cash").textContent = money(S.d.cash);
-  $("#bank").textContent = money(S.d.bank);
+  const c = $("#cash"),
+    b = $("#bank");
+  c.textContent = money(S.d.cash);
+  c.title = S.d.currency + NF.format(S.d.cash);
+  b.textContent = money(S.d.bank);
+  b.title = S.d.currency + NF.format(S.d.bank);
 }
 
 function renderFilters() {
@@ -164,7 +189,16 @@ function renderCheckout() {
   const v = S.sel && S.d.vehicles.find((x) => x.model === S.sel);
   if (!v) {
     el.classList.remove("has");
-    el.innerHTML = `<div class="empty"><div class="ring"><i data-ic="car"></i></div>${esc(T("ui_select_hint"))}</div>`;
+    el.innerHTML = `
+      <div class="empty">
+        <div class="ring"><i data-ic="car"></i></div>
+        <h3>${esc(T("ui_select_hint"))}</h3>
+        <ol class="steps">
+          <li><b>1</b>${esc(T("ui_step1"))}</li>
+          <li><b>2</b>${esc(T("ui_step2"))}</li>
+          <li><b>3</b>${esc(T("ui_step3"))}</li>
+        </ol>
+      </div>`;
     return hydrateIcons(el);
   }
   const cycle = cycleCost(v, S.period);
@@ -218,13 +252,13 @@ function renderRental() {
   const r = S.rental;
   $("#dot").classList.toggle("hidden", !r);
   if (!r) {
-    box.innerHTML = `<div class="empty" style="padding:120px 0"><div class="ring"><i data-ic="key"></i></div>${esc(T("ui_no_rental"))}</div>`;
+    box.innerHTML = `<div class="empty" style="padding:140px 0"><div class="ring"><i data-ic="key"></i></div>${esc(T("ui_no_rental"))}</div>`;
     return hydrateIcons(box);
   }
   box.innerHTML = `
     <div class="ticket">
       <div class="tk-main">
-        <div class="tk-top"><span class="badge">${esc(T("ui_active"))}</span></div>
+        <span class="badge">${esc(T("ui_active"))}</span>
         <h2>${esc(r.label)}</h2>
         <div class="plate">${esc(r.plate)}</div>
         <div class="rows">
@@ -283,6 +317,7 @@ function setTab(t) {
   document
     .querySelectorAll(".pane")
     .forEach((p) => p.classList.toggle("active", p.id === "pane-" + t));
+  $("#pageTitle").textContent = T(TAB_TITLE[t]);
 }
 
 /* ---------- events ---------- */
@@ -358,6 +393,7 @@ window.addEventListener("message", ({ data: msg }) => {
     S.t0 = performance.now();
     $("#search").value = "";
     $("#sortBtn").classList.remove("on");
+    fit();
     hydrateIcons();
     renderStatic();
     renderWallet();

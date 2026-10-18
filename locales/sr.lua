@@ -96,4 +96,7 @@ Locales['sr'] = {
     ui_insufficient = 'Nemas dovoljno novca na izabranom racunu',
     ui_per_cycle  = 'Po naplati',
     ui_active     = 'AKTIVNA',
+    ui_step1 = 'Izaberi vozilo',
+    ui_step2 = 'Izaberi period naplate i nacin placanja',
+    ui_step3 = 'Preuzmi kljuceve i papire',
 }
