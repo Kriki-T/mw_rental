@@ -90,4 +90,10 @@ Locales['sr'] = {
     ui_r6_d = 'Ako vise puta zaredom ne mozes da platis naplatu, vozilo se oduzima a depozit zadrzava. Neplaceni iznos se uzima iz depozita.',
     ui_r7_t = 'Kljucevi',
     ui_r7_d = 'Kljuceve dobijas pri rentanju. Skidaju se kad se renta zavrsi. Izlaskom sa servera renta se prekida.',
+    ui_search     = 'Pretrazi vozila...',
+    ui_sort       = 'Cena',
+    ui_no_results = 'Nema pronadjenih vozila',
+    ui_insufficient = 'Nemas dovoljno novca na izabranom racunu',
+    ui_per_cycle  = 'Po naplati',
+    ui_active     = 'AKTIVNA',
 }

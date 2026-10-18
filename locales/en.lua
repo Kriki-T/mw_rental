@@ -90,4 +90,10 @@ Locales['en'] = {
     ui_r6_d = 'If you cannot pay several charges in a row, the vehicle is repossessed and the deposit is kept. Unpaid amounts are taken from the deposit.',
     ui_r7_t = 'Keys',
     ui_r7_d = 'You receive the keys when you rent. They are removed when the rental ends. Leaving the server ends your rental.',
+    ui_search     = 'Search vehicles...',
+    ui_sort       = 'Price',
+    ui_no_results = 'No vehicles found',
+    ui_insufficient = 'Not enough funds on the selected account',
+    ui_per_cycle  = 'Per charge',
+    ui_active     = 'ACTIVE',
 }

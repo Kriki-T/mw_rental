@@ -2,6 +2,13 @@ local activeRental, currentLoc, uiOpen = nil, nil, false
 local zoneCount, textShown = 0, false
 local peds = {}
 
+---------------------------------------------------------------- gorivo (lc_fuel)
+local function setFuel(veh, amount)
+    if GetResourceState('lc_fuel') == 'started' then
+        exports['lc_fuel']:SetFuel(veh, amount)
+    end
+end
+
 ---------------------------------------------------------------- UI
 local function openUI(loc)
     if uiOpen then return end
@@ -69,7 +76,11 @@ RegisterNUICallback('rent', function(body, cb)
     local ok, veh = pcall(lib.waitFor, function()
         if NetworkDoesEntityExistWithNetworkId(res.netId) then return NetToVeh(res.netId) end
     end, 'vehicle timeout', 5000)
-    if ok and veh and veh ~= 0 then TaskWarpPedIntoVehicle(cache.ped, veh, -1) end
+
+    if ok and veh and veh ~= 0 then
+        setFuel(veh, Config.StartFuel or 100.0)
+        TaskWarpPedIntoVehicle(cache.ped, veh, -1)
+    end
 end)
 
 ---------------------------------------------------------------- povrat

@@ -26,6 +26,8 @@ Config.Blip = {
     scale  = 0.8,
 }
 
+Config.StartFuel = 100.0   -- gorivo pri rentanju (lc_fuel)
+
 -- price = cena po SATU (naplata po periodu se racuna: price * period / 60)
 -- speed = 1-100 (samo za izgled bara u NUI)
 Config.Vehicles = {

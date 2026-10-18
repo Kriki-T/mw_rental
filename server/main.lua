@@ -239,7 +239,6 @@ lib.callback.register('mw_rental:rent', function(src, data)
 
     Rentals[r.id], BySource[src] = r, r.id
     Entity(entity).state:set('mwRental', r.id, true)
-    Entity(entity).state:set('fuel', 100.0, true)   -- ox_fuel
     Keys.Give(src, entity, plate, netId)
 
     Busy[src] = nil
